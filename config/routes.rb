@@ -8,9 +8,10 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  root "regioes#index"
+  root "crawler#execute"
 
   resources :regioes
   resources :fornecedores
   resources :segmentos
+  resources :crawler
 end
