@@ -31,17 +31,19 @@ class WebCrawler
     nome_segmentos = driver.find_elements(:class, CLASS_NOME_SEGMENTOS)
 
     nome_segmentos.each do |segmento|
-      Segmento.create!(nome: segmento.text)
+      Segmento&.create(nome: segmento.text)
     end
   end
 
   # @param [Selenium::WebDriver::Firefox::Driver]
   def gera_fornecedores_regioes(driver)
-    links = driver.find_elements(:class, CLASS_NOME_SEGMENTOS)
+    count_segmentos = Segmento.count
 
-    links.each do |link|
+
+    count_segmentos.times do |index|
+      link = driver.find_elements(:class, CLASS_NOME_SEGMENTOS)[index]
       sleep(3)
-      segmento = link&.text
+      nome_segmento = link&.text
 
       link&.click
       sleep(3)
@@ -55,11 +57,12 @@ class WebCrawler
 
         nome_regiao = @driver.find_elements(:class, CLASS_NOME_REGIAO).last.text
 
-        regiao = gera_regiao(nome_regiao)
+        gera_regiao(nome_regiao)
 
-        gera_fornecedor(nome_fornecedor, regiao, segmento)
+        gera_fornecedor(nome_fornecedor, nome_regiao, nome_segmento)
 
         @driver.close
+        @driver.switch_to.window(@driver.window_handles.last)
       end
 
 
@@ -72,8 +75,9 @@ class WebCrawler
     Regiao&.create(nome: nome_regiao)
   end
 
-  def gera_fornecedor(nome_fornecedor, regiao, nome_segmento)
+  def gera_fornecedor(nome_fornecedor, nome_regiao, nome_segmento)
     segmento = Segmento.find_by(nome: nome_segmento)
+    regiao = Regiao.find_by(nome: nome_regiao)
     Fornecedor.create!(nome: nome_fornecedor, regiao: regiao, segmento: segmento)
   end
 
