@@ -1,8 +1,8 @@
 class Fornecedor < ApplicationRecord
   self.table_name = "fornecedores"
   self.primary_key = "id"
-  has_one :regiao
-  has_one :segmento
+  belongs_to :regiao
+  belongs_to :segmento
 
   validates :nome, uniqueness: true
 end
