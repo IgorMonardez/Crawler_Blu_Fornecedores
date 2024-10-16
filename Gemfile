@@ -42,6 +42,16 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   gem "pry"
+
+  gem "factory_bot_rails"
+end
+
+group :test do
+  gem "capybara", ">= 2.15"
+
+  gem 'shoulda-matchers'
+
+  gem "faker"
 end
 
 
