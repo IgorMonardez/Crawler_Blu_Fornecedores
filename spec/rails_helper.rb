@@ -20,10 +20,6 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
-  config.before(:each, type: :system, js: true) do
-    driven_by :selenium_chrome_headless
-  end
-
 
   config.infer_spec_type_from_file_location!
 
@@ -36,3 +32,12 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+Capybara.register_driver :selenium_remote_headless do |app|
+  options = ::Selenium::WebDriver::Firefox::Options.new
+  options.add_argument('--headless')
+
+  Capybara::Selenium::Driver.new(app, browser: :remote, options: options)
+end
+
+Capybara.default_driver = :selenium_remote_headless

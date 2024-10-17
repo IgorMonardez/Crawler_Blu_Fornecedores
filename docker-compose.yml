@@ -1,0 +1,43 @@
+version: '2'
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: blu_igor_de_paula
+      MYSQL_ROOT_USER: root
+      MYSQL_PASSWORD: password
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+
+  selenium:
+    image: selenium/standalone-firefox:latest
+    container_name: selenium
+    ports:
+      - "4444:4444"
+
+  web:
+    build: .
+    command: bundle exec rails server -b 0.0.0.0 -p 3000
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - selenium
+    environment:
+      DATABASE_HOST: db
+      MYSQL_DATABASE: blu_igor_de_paula
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: password
+      RAILS_ENV: development
+      SELENIUM_REMOTE_URL: "http://selenium:4444/wd/hub"
+    links:
+      - db
+
+volumes:
+  db_data:
