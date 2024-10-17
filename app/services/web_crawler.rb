@@ -12,7 +12,7 @@ class WebCrawler
   end
 
   def extract_data
-    @driver = Selenium::WebDriver.for :remote, url: ENV["SELENIUM_REMOTE_URL"], capabilities: :firefox
+    @driver = Selenium::WebDriver.for :remote, url: ENV["SELENIUM_URL"], capabilities: :firefox
     @driver.get(@url)
 
     gera_segmentos(@driver)
