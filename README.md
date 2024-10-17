@@ -1,24 +1,49 @@
-# README
+# Web crawler 
+#### Igor de Paula Siqueira Monárdez
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Para rodar o projeto é necessário primeiramente clonar o arquivo do [github](https://github.com/IgorMonardez/Crawler_Blu_Fornecedores).
 
-Things you may want to cover:
+Após o código clonado voce entra na pasta onde o repositório foi clonado.
 
-* Ruby version
+A seguir rode os seguintes códigos:
 
-* System dependencies
 
-* Configuration
 
-* Database creation
+> ##### Desenvolvimento
+> ```bash
+> $ docker-compose build
+> ```
+> ```bash
+> $ docker-compose run web bundle exec rake db:create db:migrate
+> ```
+> ```bash
+> $ docker-compose up --build
+> ```
+> ##### Para rodar o crawler basta estar na root ou digitar:
+> > localhost:3000/crawler/execute
+> 
+> ##### Para visualizar os fornecedores:
+> >localhost:3000/fornecedores
+> 
+> ##### Para visualizar os segmentos:
+> >localhost:3000/segmentos
+> 
+> ##### Para visualizar as regiões:
+> >localhost:3000/regioes
+> 
+> ##### Para os filtros basta seguir o seguinte esboço:
+> >localhost:3000/<nome_tabela>?<nome_coluna>=<valordesejado>
+> 
+> ##### Para os filtros com mais de uma coluna basta seguir o seguinte esboço:
+> >localhost:3000/<nome_tabela>?<nome_coluna>=<valor_desejado>&<nome_coluna>=<valor_desejado>
+> 
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+> ##### Teste
+> ```bash
+> $ docker-compose build
+> ```
+> 
+> ```bash
+> $ docker-compose run web bundle exec rspec
+> ```
+> 
