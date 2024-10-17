@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Fornecedores', type: :feature, js: true do
   context 'Sem filtro' do
-    let!(:fornecedor) { create :fornecedor}
+    let!(:fornecedor) { create :fornecedor }
     before do
       visit '/fornecedores'
     end
